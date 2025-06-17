@@ -1,7 +1,26 @@
 # ivr_bot_api/app/core/config.py
 from pydantic import BaseModel
-from typing import Dict, List # List is not used, can be removed if desired, but harmless
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Dict, Optional, List # List is not used from existing code
 
+# API Settings Management
+class ApiSettings(BaseSettings):
+    OPENAI_API_KEY: str = "YOUR_OPENAI_API_KEY_HERE"  # Default if not in .env
+    ELEVENLABS_API_KEY: str = "YOUR_ELEVENLABS_API_KEY_HERE" # Default if not in .env
+    ASR_PROVIDER_API_KEY: Optional[str] = None
+    OPENAI_BASE_URL: Optional[str] = None
+    ELEVENLABS_BASE_URL: Optional[str] = None
+
+    model_config = SettingsConfigDict(
+        env_file=".env",        # Load from .env file
+        env_file_encoding='utf-8', # Specify encoding for .env file
+        extra="ignore",         # Ignore extra fields in .env
+        case_sensitive=False    # Environment variable names are case-insensitive
+    )
+
+settings = ApiSettings()
+
+# Existing Language Configuration
 class LanguageConfig(BaseModel):
     name: str
     asr_model: str # Placeholder for ASR model identifier
