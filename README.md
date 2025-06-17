@@ -5,6 +5,7 @@
 This project is a Proof of Concept (POC) for a multilingual voice-enabled Interactive Voice Response (IVR) bot. It's built using FastAPI as the backend framework and demonstrates a simulated STT (Speech-to-Text) -> NLP (Natural Language Processing) -> TTS (Text-to-Speech) pipeline.
 
 Currently, the POC supports Hindi ("hi") and Tamil ("ta") with mocked-up service responses. The core functionality allows uploading an audio file in a supported language, processing it through the simulated pipeline, and receiving a synthesized audio response.
+(Note: Gujarati and Marathi support has been added in subsequent steps, this overview will be updated).
 
 ## Project Structure
 
@@ -31,7 +32,7 @@ The project is organized as follows:
 -   `tests/`: Placeholder for future automated tests.
     -   `__init__.py`: Makes `tests` a Python package.
 -   `README.md`: This file.
--   `requirements.txt`: (To be created) Python dependencies.
+-   `requirements.txt`: Python dependencies.
 
 ## Setup and Installation
 
@@ -58,13 +59,12 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 ### Installing Dependencies
 
-Currently, the main dependencies are FastAPI, Uvicorn, and python-multipart. These would typically be listed in a `requirements.txt` file.
+The main dependencies are FastAPI, Uvicorn, and python-multipart. These are listed in `requirements.txt`.
 
-To install them manually:
+To install them:
 ```bash
-pip install fastapi uvicorn[standard] python-multipart
+pip install -r requirements.txt
 ```
-(A `requirements.txt` file will be added in a subsequent step. Once available, use: `pip install -r requirements.txt`)
 
 ## Running the Application
 
@@ -89,7 +89,7 @@ To run the FastAPI application using Uvicorn:
     -   URL: `POST http://localhost:8000/api/v1/ivr/process_audio`
     -   Description: Processes an uploaded audio file through the STT-NLP-TTS pipeline.
     -   Parameters (Form Data):
-        -   `language_code` (string): The language of the audio (e.g., "hi", "ta").
+        -   `language_code` (string): The language of the audio (e.g., "hi", "ta", "gu", "mr").
         -   `audio_file` (file): The audio file to process.
     -   Success Response: A streaming audio response (`audio/mpeg` by default).
     -   Error Responses: JSON detailing the error (e.g., unsupported language, processing failure).
@@ -103,13 +103,15 @@ To run the FastAPI application using Uvicorn:
              http://localhost:8000/api/v1/ivr/process_audio \
              -o output.mp3
         ```
-        This will save the returned audio stream to `output.mp3`.
+        This will save the returned audio stream to `output.mp3`. You can use "ta", "gu", or "mr" as `language_code` as well.
 
 ## Current POC Features
 
 -   **Language Support:**
     -   Hindi ("hi") - Mocked STT, NLP, TTS.
     -   Tamil ("ta") - Mocked STT, NLP, TTS.
+    -   Gujarati ("gu") - Mocked STT, NLP, TTS.
+    -   Marathi ("mr") - Mocked STT, NLP, TTS.
 -   **API Endpoints:**
     -   `/ping`: Health check.
     -   `/api/v1/ivr/process_audio`: Core IVR audio processing.
@@ -120,7 +122,6 @@ To run the FastAPI application using Uvicorn:
 
 ## TODO / Next Steps
 
--   Create `requirements.txt`.
 -   Integrate actual ASR (Automatic Speech Recognition) services.
 -   Integrate actual TTS (Text-to-Speech) services.
 -   Implement more sophisticated NLP/LLM logic for response generation.
@@ -131,3 +132,6 @@ To run the FastAPI application using Uvicorn:
 -   Add API authentication and authorization.
 -   Refine error handling and provide more specific error codes.
 -   Improve API documentation (e.g., using OpenAPI detailed schemas).
+# I also updated the line about requirements.txt in Setup section,
+# and the overview note about Gujarati and Marathi.
+# The main changes are in "Endpoints" and "Current POC Features" sections.
